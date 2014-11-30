@@ -22,7 +22,7 @@ var categories = {
     images: [],
     productURL:	'http://bigdatapawnshop.s3.amazonaws.com/spyProducts/',
     baseURL: 'http%253A%252F%252Fbigdatapawnshop.s3.amazonaws.com%252Fspy_files%252F',
-    zazzleImageURL: 'http%3A%2F%2Fbigdatapawnshop.s3.amazonaws.com%2Fspy_files%2F',
+    zazzleImageURL: 'http%3A%2F%2Fbigdatapawnshop.s3.amazonaws.com%2Fspy_resized%2F',
     parser: function(item, image){
       var item = item.name;
       if(image.indexOf("_docs_") > -1){
