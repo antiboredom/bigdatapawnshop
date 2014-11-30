@@ -150,12 +150,10 @@ function switchCategory(categoryName) {
 
   // load the category products if needed
   if (categories[categoryName].items.length == 0) {
-    $.getJSON('data/' + categoryName + '_filenames.json', function(data){
-      categories[categoryName].images = data;
-      $.getJSON('data/' + categoryName + '_prices_and_descriptions.json', function(data){
-        categories[categoryName].items = data;
-        populate(categories[categoryName], 48);
-      });
+    $.getJSON('data/' + categoryName + '.json', function(data){
+      categories[categoryName].images = data.filenames;
+      categories[categoryName].items = data.products;
+      populate(categories[categoryName], 48);
     });
   } else {
     // otherwise just populate the html
