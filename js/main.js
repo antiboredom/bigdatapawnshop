@@ -6,7 +6,14 @@ var categories = {
     baseURL: 'http%253A%252F%252Fbigdatapawnshop.s3.amazonaws.com%252Fant2%252F',
     zazzleImageURL: 'http%3A%2F%2Fbigdatapawnshop.s3.amazonaws.com%2Fant2%2F',
     parser: function(item, image){
-      return image.replace('.jpg', '').replace('_', ' ').replace('-', ' ') + ' ' + item.name.toUpperCase();
+      return image
+              .replace('.jpg', '')
+              .replace('_', ' ')
+              .replace('-', ' ')
+              .toUpperCase()
+              .replace('ANT-', '')
+              .replace('NSA', '')
+              .replace('NSA ANT-', '') + ' ' + item.name.toUpperCase();
     }
   },
 
