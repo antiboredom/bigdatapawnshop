@@ -227,9 +227,9 @@ $('.sidebar-nav a').click(function(e){
 });
 
 // hide failed images
-$('.product img').on('error', function(e){
-  console.log('error');
-});
+function removeMe(el) {
+  $(el).parent().remove();
+}
 
 // load the default category on page load
 switchCategory(currentCategory);

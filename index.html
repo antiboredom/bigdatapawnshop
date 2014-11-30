@@ -75,7 +75,7 @@
     <!-- template -->
     <script id="product-template" type="text/x-handlebars-template">
       <a href="{{zazzleURL}}" class="product" target="_blank">
-        <img src="{{imageURL}}">
+        <img src="{{imageURL}}" onerror="removeMe(this)">
         <span class="name">{{name}}</span>
         <span class="price">{{price}}</span>
       </a>
