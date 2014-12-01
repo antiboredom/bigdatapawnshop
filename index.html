@@ -37,15 +37,20 @@
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
                     <a href="#">
-                        Start Bootstrap
+                        <img src="images/logo.gif" alt="Big Data Pawn Shop">
                     </a>
                 </li>
                 <li>
-                    <a href="#ant" data-cat="ant">Ant</a>
+                  <a href="#ant" data-cat="ant"><span class="glyphicon glyphicon-tag" aria-hidden="true"></span> NSA ANT CATALOG</a>
                 </li>
                 <li>
-                    <a href="#spy" data-cat="spy">Spy Files</a>
+                  More coming soon...
                 </li>
+                <!--
+                <li>
+                    <a href="#spy" data-cat="spy">Coming Soon/a>
+                </li>
+                -->
             </ul>
         </div>
         <!-- /#sidebar-wrapper -->
@@ -57,10 +62,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1>Simple Sidebar</h1>
-                        <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
-                        <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
-                        <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+                        <h1>NSA ANT CATALOG ON SALE<br>NOW UNTIL DECEMBER 31ST!</h1>
                     </div>
                 </div>
             </div>
@@ -74,11 +76,18 @@
 
     <!-- template -->
     <script id="product-template" type="text/x-handlebars-template">
-      <a href="{{zazzleURL}}" class="product" target="_blank">
+      <div class="product">
+      <a href="{{zazzleURL}}" target="_blank">
         <img src="{{imageURL}}" onerror="removeMe(this)">
-        <span class="name">{{name}}</span>
-        <span class="price">{{price}}</span>
-      </a>
+        </a>
+        <div class="name">{{name}}</div>
+        <div class="price"><span class="detail-label">Unit Cost:</span> {{price}}</div>
+        <div class="status"><span class="detail-label">Status:</span> <a href="{{zazzleURL}}" target="_blank">
+
+        <button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-star" aria-hidden="true"></span> BUY NOW</button>
+        </a></div>
+
+        </div>
     </script>
 
     <!-- jQuery -->

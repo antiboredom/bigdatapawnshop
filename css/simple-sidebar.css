@@ -8,29 +8,23 @@
 
 #wrapper {
     padding-left: 0;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+
 }
 
 #wrapper.toggled {
-    padding-left: 250px;
+    padding-left: 215px;
 }
 
 #sidebar-wrapper {
     z-index: 1000;
     position: fixed;
-    left: 250px;
+    left: 215px;
     width: 0;
     height: 100%;
-    margin-left: -250px;
+    margin-left: -215px;
     overflow-y: auto;
-    background: #000;
-    -webkit-transition: all 0.5s ease;
-    -moz-transition: all 0.5s ease;
-    -o-transition: all 0.5s ease;
-    transition: all 0.5s ease;
+    background: #fff;
+
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -56,22 +50,23 @@
     margin: 0;
     padding: 0;
     list-style: none;
+    padding-left:20px;
 }
 
 .sidebar-nav li {
-    text-indent: 20px;
     line-height: 40px;
+
 }
 
 .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #999999;
+    color: #666666;
 }
 
 .sidebar-nav li a:hover {
     text-decoration: none;
-    color: #fff;
+    color: #000000;
     background: rgba(255,255,255,0.2);
 }
 
@@ -81,9 +76,10 @@
 }
 
 .sidebar-nav > .sidebar-brand {
-    height: 65px;
+    height: 114px;
     font-size: 18px;
     line-height: 60px;
+    margin: 30px 0;
 }
 
 .sidebar-nav > .sidebar-brand a {
@@ -91,7 +87,8 @@
 }
 
 .sidebar-nav > .sidebar-brand a:hover {
-    color: #fff;
+    color: #000;
+    text-decoration: underline;
     background: none;
 }
 
