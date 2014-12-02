@@ -26,6 +26,8 @@ var categories = {
     parser: function(item, image){
       var item = item.name;
       if(image.indexOf("_docs_") > -1){
+        
+
         //spy3_https__www.wikileaks.org_spyfiles_docs_SILTEC-PresSoci-fr.pdf_jpg123.jpg
         var pattern = /spy3_https__www\.wikileaks\.org_spyfiles_docs_/
         var pattern2 = /\.pdf_jpg\d{1,3}\.jpg/
@@ -33,6 +35,7 @@ var categories = {
         var pattern4 = /-[a-z][a-z]/
         image = image.replace(pattern,' ');
         image = image.replace(pattern2,' ');
+
         image = image.replace(pattern3,' ');
         image = image.replace(pattern4,' ');
         image = image.replace('-', '');
@@ -46,7 +49,10 @@ var categories = {
         var pattern2 = /-[a-z][a-z]/
         var pattern3 =/\.pdf_jpg\d{1,3}\.jpg/
         var pattern4 =/\d{6}/
-
+        var id = image.match(pattern3)[0];
+        
+        id = id.replace(".pdf_jpg",'').replace(".jpg","").trim();
+        console.log(id);
 
         image = image.replace(pattern,'');
 
@@ -125,7 +131,7 @@ var categories = {
         image = image.replace("_"," ");
         image = image.toUpperCase();
 
-        return image.trim().replace('.jpg', '').replace('_', ' ').replace('-', ' ').trim();// + ' ' + item.toUpperCase();
+        return image.trim().replace('.jpg', '').replace('_', ' ').replace('-', ' ').trim() + ' ' + id;// + ' ' + item.toUpperCase();
 
       }
 
@@ -149,6 +155,7 @@ var navTemplate = Handlebars.compile(navTemplateSource);
 function loadProducts() {
   $.getJSON('data/products.json', function(data){
     data.categories.forEach(function(cat){
+
       cat.filenames.forEach(function(filename) {
         var parsed = {};
         parsed[categories[cat.name].parser({}, filename)] = filename;
@@ -183,8 +190,8 @@ function populate(total) {
       container.append(html);
     }
     $(window).bind('scroll', bindScroll);
-
   } else {
+    console.log(categories[currentCategory]);
     categories[currentCategory].items.forEach(function(item){
       var image = '';
       categories[currentCategory].images.forEach(function(img){
