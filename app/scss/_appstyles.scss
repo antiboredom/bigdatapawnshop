@@ -1,0 +1,160 @@
+/* all app scss styles here */
+$bdps-green: #66cc33;
+$bdps-orange: $secondary-color;
+$bdps-grey: #bbb9c6;
+$bdps-blue-violet:#261099;
+$top-bar-height:100px;
+$top-bar-menu-item-height:25px;
+$bdps-pink:#ff66ff;
+$bdps-pink-disabled:lighten($bdps-pink,0);
+
+nav.custom-top-bar{
+	margin: 24px 0 34px 0;
+	height:100px;
+	
+	.title-area h1{
+		font-size:60px;
+	}
+	ul{
+		list-style: none;
+	}
+
+	.nav-vmid{
+			height: 30px;
+			margin-top:37px;
+			font-weight: bold;
+			font-size: 20px;
+
+		}
+	section.top-bar-section{
+		
+		ul.right{
+			margin-top:(($top-bar-height - $top-bar-menu-item-height)/2);
+		}
+		li.coming-soon{
+			background:$bdps-pink-disabled;
+			text-indent: -9000px;
+			height:30px;
+			padding: 0 10px;
+			a{
+				&:hover{
+					background:$bdps-pink !important;
+					color:$bdps-pink !important;
+				}	
+			}
+			
+		}
+	}
+}
+
+.sidebar{
+	h1{
+		font-size: 13px;
+		color:black;
+	}
+	h3{
+		font-size:13px;
+		font-weight: bold;
+		margin-bottom: 10px;
+		padding-bottom: 3px;
+		border-bottom: 1px solid #cccccc;
+		color:#666;
+
+	}
+	h5.subheader{
+		margin-bottom:25px;
+		font-color:#999;
+		font-size:11px;
+		font-style:italic;
+	}
+	ul{
+		margin-left:0;
+	}
+	ul.about-products{
+		li{
+			list-style: none;
+			font-size:11px;
+			font-weight: normal;
+			margin-bottom: 6px;
+			a{
+				color:$primary-color;
+				&:hover{
+					color:darken($primary-color,10%);
+				}
+			}
+		}
+	}
+	ul.products{
+		li{
+			list-style: none;
+			font-size:14px;
+			font-weight: bold;
+			margin-bottom: 6px;
+			a{
+				color:$primary-color;
+				&:hover{
+					color:darken($primary-color,10%);
+				}
+			}
+		}
+	}
+}
+ul.product-grid{
+	.button{
+		border-width:1px;
+		transition: background-color 50ms ease-out;
+		background-color:#fff;
+		color:#999;
+		&:hover{
+			background-color:#fff;
+			border-color:#333;
+			color:#333;
+		}
+	}
+	li{
+		img{
+			margin-bottom:10px;
+		}
+		.name{
+			text-transform: uppercase;
+			font-size:15px;
+			font-weight: bold;
+			margin-bottom:2px;
+		}
+		.price-label{
+			display: inline-block;	
+			font-weight: normal;
+			color:black;
+			font-size: 10px;	
+		}
+		.price{
+			font-weight: bold;
+			color:$bdps-orange;
+			font-size: 16px;
+			display: inline-block;
+		}
+		.status{
+			//
+		}
+		.description{
+			font-size: 11px;
+			color:$bdps-grey;
+			margin-bottom: 3px;
+		}
+		.buy-btn{
+			display: inline-block;
+
+		}
+	}
+}
+
+footer{
+	p{
+		font-size:10px;
+	}
+	ul{
+		li{
+			font-size:10px;
+		}
+	}
+}
