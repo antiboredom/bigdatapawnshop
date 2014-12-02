@@ -1,4 +1,3 @@
-
 var categories = {
   ant: {
     items: [],
@@ -14,7 +13,7 @@ var categories = {
               .toUpperCase()
               .replace('ANT-', '')
               .replace('NSA', '')
-              .replace('NSA ANT-', '') + ' ' + item.name.toUpperCase();
+              .replace('NSA ANT-', '');// + ' ' + item.name.toUpperCase();
     }
   },
 
@@ -38,7 +37,7 @@ var categories = {
         image = image.replace(pattern4,' ');
         image = image.replace('-', '');
         image = image.toUpperCase();
-        return image.replace('.jpg', '').replace('_', ' ').replace('-', ' ') + ' ' + item;
+        return image.replace('.jpg', '').replace('_', ' ').replace('-', ' ');// + ' ' + item;
 
       }
       else{
@@ -126,7 +125,7 @@ var categories = {
         image = image.replace("_"," ");
         image = image.toUpperCase();
 
-        return image.trim().replace('.jpg', '').replace('_', ' ').replace('-', ' ') + ' ' + item.toUpperCase();
+        return image.trim().replace('.jpg', '').replace('_', ' ').replace('-', ' ');// + ' ' + item.toUpperCase();
 
       }
 
@@ -143,24 +142,22 @@ var container = $('.product-grid');
 var templateSource = $('#product-template').html();
 var template = Handlebars.compile(templateSource);
 
+function loadProducts() {
+  $.getJSON('data/products.json', function(data){
+    data.categories.forEach(function(cat){
+      console.log(cat);
+      categories[cat.name].images = cat.filenames;
+      categories[cat.name].items = cat.products;
+    });
+    switchCategory(currentCategory);
+  });
+}
 
 // changes which category we're looking at based on name (this needs to be the same as the key in the categories object)
 function switchCategory(categoryName) {
   container.html('');
   $(window).unbind('scroll');
-
-  // load the category products if needed
-  if (categories[categoryName].items.length == 0) {
-    $.getJSON('data/' + categoryName + '.json', function(data){
-      categories[categoryName].images = data.filenames;
-      categories[categoryName].items = data.products;
-      populate(categories[categoryName], 48);
-    });
-  } else {
-    // otherwise just populate the html
-    populate(categories[categoryName], 48);
-  }
-
+  populate(categories[categoryName], 48);
 }
 
 // populate the window with new products
@@ -214,8 +211,18 @@ function getRandomProduct(category){
     imageURL: bucketImgURL,
     price: item.price,
     name: name,
+    description: item.name,
     pd: item.pd
   }
+}
+
+function nav(catName){
+  var items = [];
+  for (var i = 0; i < category.images.length; i++) {
+    var name = category.parser({}, category.images[i]).trim();
+    items.push({url: name, name: name});
+  }
+  return {items: items}
 }
 
 // lazy loading
@@ -238,8 +245,7 @@ function removeMe(el) {
 }
 
 // load the default category on page load
-switchCategory(currentCategory);
-
+loadProducts();
 
 var app = (function(document, $) {
 

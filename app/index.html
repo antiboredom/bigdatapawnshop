@@ -198,11 +198,19 @@
     <script id="product-template" type="text/x-handlebars-template">
       <li>
          <img src="{{imageURL}}" onerror="removeMe(this)">
-         <div class="name">{{name}}</div>
+         <div class="name">{{name}} {{description}}</div>
          <div class="price"><span class="price-label">Unit Cost:</span> {{price}}</div>
-         <div class="description">{{name}}</div>
+         <div class="description">{{description}}</div>
          <div class="buy"><a href="{{zazzleURL}}" class="button tiny radius">BUY NOW</a></div>
       </li>
+    </script>
+
+    <script id="nav-item-template" type="text/x-handlebars-template">
+      {{#each items}}
+        <li>
+           <a href="#{{url}}">{{name}}</a>
+        </li>
+      {{/each}}
     </script>
 
     <!-- build:js js/vendor/libraries.min.js -->
