@@ -33,14 +33,17 @@ var categories = {
         var pattern2 = /\.pdf_jpg\d{1,3}\.jpg/
         var pattern3 = /\d{13}/;
         var pattern4 = /-[a-z][a-z]/
+
+        var id = image.match(pattern2)[0];
+        id = id.replace(".pdf_jpg",'').replace(".jpg","").trim();
+
         image = image.replace(pattern,' ');
         image = image.replace(pattern2,' ');
-
         image = image.replace(pattern3,' ');
         image = image.replace(pattern4,' ');
         image = image.replace('-', '');
         image = image.toUpperCase();
-        return image.replace('.jpg', '').replace('_', ' ').replace('-', ' ').trim();// + ' ' + item;
+        return image.replace('.jpg', '').replace('_', ' ').replace('-', ' ').trim() + '  '+id;// + ' ' + item;
 
       }
       else{
@@ -50,9 +53,7 @@ var categories = {
         var pattern3 =/\.pdf_jpg\d{1,3}\.jpg/
         var pattern4 =/\d{6}/
         var id = image.match(pattern3)[0];
-        
         id = id.replace(".pdf_jpg",'').replace(".jpg","").trim();
-        console.log(id);
 
         image = image.replace(pattern,'');
 
@@ -158,9 +159,21 @@ function loadProducts() {
 
       cat.filenames.forEach(function(filename) {
         var parsed = {};
-        parsed[categories[cat.name].parser({}, filename)] = filename;
-        categories[cat.name].images.push(parsed);
+        if(cat.name == "spy"){
+          var name = categories[cat.name].parser({}, filename)
+          var w = name.split(' ');
+          w = w[0]+ " " + w[1] + " "+w[w.length -1];  
+          parsed[w] = filename;
+          categories[cat.name].images.push(parsed);
+        }
+        else{
+          parsed[categories[cat.name].parser({}, filename)] = filename;
+          categories[cat.name].images.push(parsed);
+        }
+
+        
       });
+
       categories[cat.name].items = cat.products;
     });
     nav();
@@ -199,7 +212,8 @@ function populate(total) {
       });
       var product = getProduct(item, image);
       var html = template(product);
-      container.append(html);
+      container.append(html);  
+      
     });
   }
 
