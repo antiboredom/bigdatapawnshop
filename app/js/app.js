@@ -143,6 +143,9 @@ var container = $('.product-grid');
 var templateSource = $('#product-template').html();
 var template = Handlebars.compile(templateSource);
 
+var navTemplateSource = $('#nav-item-template').html();
+var navTemplate = Handlebars.compile(navTemplateSource);
+
 function loadProducts() {
   $.getJSON('data/products.json', function(data){
     data.categories.forEach(function(cat){
@@ -153,6 +156,7 @@ function loadProducts() {
       });
       categories[cat.name].items = cat.products;
     });
+    nav();
     route(currentCategory);
   });
 }
@@ -213,7 +217,6 @@ function getProduct(item, image){
       }
     }
   }
-  console.log(item, image);
   var category = categories[currentCategory];
   //var item = category.items[Math.floor(Math.random()*category.items.length)];
   //var image = category.images[Math.floor(Math.random()*category.images.length)];
@@ -244,13 +247,25 @@ function getProduct(item, image){
   }
 }
 
-function nav(catName){
-  var items = [];
-  for (var i = 0; i < category.images.length; i++) {
-    var name = category.parser({}, category.images[i]).trim();
-    items.push({url: name, name: name});
+function nav(){
+  $('ul.products').html('');
+  for (var catName in categories) {
+    if (categories.hasOwnProperty(catName)) {
+      var cat = categories[catName];
+      var items = [];
+      cat.images.forEach(function(img){
+        var name = Object.keys(img)[0]
+        items.push({url: catName + '/' + name, name: name});
+      });
+      var html = navTemplate({items: items});
+      $('.' + catName + '-products').html(html);
+    }
   }
-  return {items: items}
+
+  // category switching event handler
+  $('.catalog-title a, ul.products a').on('click', function(e){
+    route($(this).attr('href'));
+  });
 }
 
 // lazy loading
@@ -261,11 +276,6 @@ function bindScroll(){
   }
 }
 
-// category switching event handler
-$('.sidebar-nav a').click(function(e){
-  currentCategory = $(this).data('cat');
-  switchCategory(currentCategory);
-});
 
 // hide failed images
 function removeMe(el) {
