@@ -13,7 +13,7 @@ var categories = {
               .toUpperCase()
               .replace('ANT-', '')
               .replace('NSA', '')
-              .replace('NSA ANT-', '');// + ' ' + item.name.toUpperCase();
+              .replace('NSA ANT-', '').trim();// + ' ' + item.name.toUpperCase();
     }
   },
 
@@ -37,7 +37,7 @@ var categories = {
         image = image.replace(pattern4,' ');
         image = image.replace('-', '');
         image = image.toUpperCase();
-        return image.replace('.jpg', '').replace('_', ' ').replace('-', ' ');// + ' ' + item;
+        return image.replace('.jpg', '').replace('_', ' ').replace('-', ' ').trim();// + ' ' + item;
 
       }
       else{
@@ -125,7 +125,7 @@ var categories = {
         image = image.replace("_"," ");
         image = image.toUpperCase();
 
-        return image.trim().replace('.jpg', '').replace('_', ' ').replace('-', ' ');// + ' ' + item.toUpperCase();
+        return image.trim().replace('.jpg', '').replace('_', ' ').replace('-', ' ').trim();// + ' ' + item.toUpperCase();
 
       }
 
@@ -182,7 +182,11 @@ function populate(total) {
 
   } else {
     categories[currentCategory].items.forEach(function(item){
-      var product = getProduct(item, currentSubcategory);
+      var image = '';
+      categories[currentCategory].images.forEach(function(img){
+        if (img[currentSubcategory]) image = img[currentSubcategory]
+      });
+      var product = getProduct(item, image);
       var html = template(product);
       container.append(html);
     });
