@@ -4,6 +4,7 @@
     "foundation": "zurb/bower-foundation",
     "font-awesome": "~4.2.0",
     "jquery": "latest",
-    "infinite-scroll":"latest"
+    "infinite-scroll": "latest",
+    "handlebars": "latest"
   }
 }

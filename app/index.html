@@ -193,11 +193,24 @@
     </div>
   </div>
 
+
+    <!-- template -->
+    <script id="product-template" type="text/x-handlebars-template">
+      <li>
+         <img src="{{imageURL}}" onerror="removeMe(this)">
+         <div class="name">{{name}}</div>
+         <div class="price"><span class="price-label">Unit Cost:</span> {{price}}</div>
+         <div class="description">{{name}}</div>
+         <div class="buy"><a href="{{zazzleURL}}" class="button tiny radius">BUY NOW</a></div>
+      </li>
+    </script>
+
     <!-- build:js js/vendor/libraries.min.js -->
     <!-- bower:js -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/fastclick/lib/fastclick.js"></script>
     <script src="bower_components/infinite-scroll/jquery.infinitescroll.js"></script>
+    <script src="bower_components/handlebars/handlebars.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js js/vendor/foundation.min.js -->
