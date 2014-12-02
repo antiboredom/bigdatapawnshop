@@ -136,6 +136,7 @@ var categories = {
 
 // the default category
 var currentCategory = 'ant';
+var currentSubcategory = null;
 
 // setting up container element for products, and template
 var container = $('.product-grid');
@@ -145,35 +146,49 @@ var template = Handlebars.compile(templateSource);
 function loadProducts() {
   $.getJSON('data/products.json', function(data){
     data.categories.forEach(function(cat){
-      console.log(cat);
-      categories[cat.name].images = cat.filenames;
+      cat.filenames.forEach(function(filename) {
+        var parsed = {};
+        parsed[categories[cat.name].parser({}, filename)] = filename;
+        categories[cat.name].images.push(parsed);
+      });
       categories[cat.name].items = cat.products;
     });
-    switchCategory(currentCategory);
+    route(currentCategory);
   });
 }
 
 // changes which category we're looking at based on name (this needs to be the same as the key in the categories object)
-function switchCategory(categoryName) {
+function route(path) {
   container.html('');
   $(window).unbind('scroll');
-  populate(categories[categoryName], 48);
+  var params = path.split("/");
+  currentCategory = params[0].replace("#", "");
+  currentSubcategory = params[1] || null;
+  populate(48);
 }
 
 // populate the window with new products
-function populate(category, total) {
-  for (var i = 0; i < total; i ++) {
-    var product = getRandomProduct(category);
-    var html = template(product);
-    container.append(html);
+function populate(total) {
+  if (currentSubcategory == null) {
+    for (var i = 0; i < total; i ++) {
+      var item = categories[currentCategory].items[Math.floor(Math.random()* categories[currentCategory].items.length)];
+      var image = categories[currentCategory].images[Math.floor(Math.random()* categories[currentCategory].images.length)];
+
+      var product = getProduct(item, image);
+      var html = template(product);
+      container.append(html);
+    }
+    $(window).bind('scroll', bindScroll);
+
+  } else {
+    categories[currentCategory].items.forEach(function(item){
+      var product = getProduct(item, currentSubcategory);
+      var html = template(product);
+      container.append(html);
+    });
   }
 
-  // set up lazy loading
-  $(window).bind('scroll', bindScroll);
-
 }
-
-
 
 /*
 expects a category like this:
@@ -185,10 +200,19 @@ expects a category like this:
   parser: parser
 }
 */
-function getRandomProduct(category){
-
-  var item = category.items[Math.floor(Math.random()*category.items.length)];
-  var image = category.images[Math.floor(Math.random()*category.images.length)];
+function getProduct(item, image){
+  if (typeof image == 'object') {
+    for(key in image) {
+      if(image.hasOwnProperty(key)) {
+        image = image[key];
+        //do something with value;
+      }
+    }
+  }
+  console.log(item, image);
+  var category = categories[currentCategory];
+  //var item = category.items[Math.floor(Math.random()*category.items.length)];
+  //var image = category.images[Math.floor(Math.random()*category.images.length)];
 
   var zazzleURL = 'http://www.zazzle.com/api/create/at-238269211029758341?'+
                   '?rf=238269211029758341'+
@@ -229,7 +253,7 @@ function nav(catName){
 function bindScroll(){
   if ($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
     $(window).unbind('scroll');
-    populate(categories[currentCategory], 16);
+    populate(16);
   }
 }
 
