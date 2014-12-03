@@ -6284,6 +6284,18 @@ th.hide-for-touch {
  }
 
 /* all app scss styles here */
+.cat-spy {
+  display: none; }
+
+.welcome h1 {
+  font-size: 4.5em;
+  line-height: 1.1em;
+  font-weight: bold;
+  text-transform: uppercase; }
+.welcome .redacted {
+  background: #ff66ff;
+  color: #ff66ff; }
+
 nav.custom-top-bar {
   margin: 24px 0 34px 0;
   height: 100px; }
@@ -6293,11 +6305,19 @@ nav.custom-top-bar {
     list-style: none; }
   nav.custom-top-bar .nav-vmid {
     height: 30px;
-    margin-top: 37px;
+    margin-top: 37px; }
+  nav.custom-top-bar .callout {
     font-weight: bold;
-    font-size: 20px; }
+    font-size: 18px;
+    line-height: 1.1em; }
   nav.custom-top-bar section.top-bar-section ul.right {
     margin-top: 37.5px; }
+    nav.custom-top-bar section.top-bar-section ul.right li a {
+      background: black;
+      color: black; }
+      nav.custom-top-bar section.top-bar-section ul.right li a:hover {
+        background: black;
+        color: black; }
   nav.custom-top-bar section.top-bar-section li.coming-soon {
     background: #ff66ff;
     text-indent: -9000px;
@@ -6316,7 +6336,10 @@ nav.custom-top-bar {
   margin-bottom: 10px;
   padding-bottom: 3px;
   border-bottom: 1px solid #cccccc;
-  color: #666; }
+  color: #666;
+  margin-right: 10px; }
+  .sidebar h3 a {
+    color: black; }
 .sidebar h5.subheader {
   margin-bottom: 25px;
   font-color: #999;
@@ -6335,13 +6358,14 @@ nav.custom-top-bar {
       color: #080d66; }
 .sidebar ul.products li {
   list-style: none;
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
-  margin-bottom: 6px; }
+  margin-bottom: 3px; }
   .sidebar ul.products li a {
     color: #0c1395; }
     .sidebar ul.products li a:hover {
-      color: #080d66; }
+      color: #080d66;
+      text-decoration: underline; }
 
 ul.product-grid .button {
   border-width: 1px;
@@ -6378,5 +6402,6 @@ ul.product-grid li .buy-btn {
 
 footer p {
   font-size: 10px; }
-footer ul li {
-  font-size: 10px; }
+footer ul.inline-list li {
+  font-size: 10px;
+  margin-left: 9px; }

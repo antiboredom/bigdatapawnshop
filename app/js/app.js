@@ -1,3 +1,18 @@
+'use strict';
+/*jslint bitwise: true */
+/*jshint unused: false */
+/*jshint undef: false */
+/*jshint quotmark: false */
+// Calculate days left in sale
+
+function setDaysRemaining(){
+  var today = new Date();
+  var endday = new Date("December 31, 2014 11:59:00");
+  var days = new Date( endday - today);
+  var num = days.getDate();
+  $('#cyberdecember-days').html(num + " days left");
+}
+
 var categories = {
   ant: {
     items: [],
@@ -24,13 +39,14 @@ var categories = {
     baseURL: 'http%253A%252F%252Fbigdatapawnshop.s3.amazonaws.com%252Fspy_files%252F',
     zazzleImageURL: 'http%3A%2F%2Fbigdatapawnshop.s3.amazonaws.com%2Fspy_resized%2F',
     parser: function(item, image){
-      var item = item.name;
+      // item = item.name;
+      var pattern, pattern2, pattern3, pattern4;
       if(image.indexOf("_docs_") > -1){
         //spy3_https__www.wikileaks.org_spyfiles_docs_SILTEC-PresSoci-fr.pdf_jpg123.jpg
-        var pattern = /spy3_https__www\.wikileaks\.org_spyfiles_docs_/
-        var pattern2 = /\.pdf_jpg\d{1,3}\.jpg/
-        var pattern3 = /\d{13}/;
-        var pattern4 = /-[a-z][a-z]/
+        pattern = /spy3_https__www\.wikileaks\.org_spyfiles_docs_/;
+        pattern2 = /\.pdf_jpg\d{1,3}\.jpg/;
+        pattern3 = /\d{13}/;
+        pattern4 = /-[a-z][a-z]/;
         image = image.replace(pattern,' ');
         image = image.replace(pattern2,' ');
         image = image.replace(pattern3,' ');
@@ -42,16 +58,16 @@ var categories = {
       }
       else{
         //spy2_https__www.wikileaks.org_spyfiles_files_0_105_AMESYS-PROP_GEN_SECU_V2.pdf_jpg8.jpg"
-        var pattern = /spy\d{1}_https__www\.wikileaks\.org_spyfiles_files_0_\d{1,3}_/
-        var pattern2 = /-[a-z][a-z]/
-        var pattern3 =/\.pdf_jpg\d{1,3}\.jpg/
-        var pattern4 =/\d{6}/
+        pattern = /spy\d{1}_https__www\.wikileaks\.org_spyfiles_files_0_\d{1,3}_/;
+        pattern2 = /-[a-z][a-z]/;
+        pattern3 =/\.pdf_jpg\d{1,3}\.jpg/;
+        pattern4 =/\d{6}/;
 
 
         image = image.replace(pattern,'');
 
         if(image.indexOf("ELAMAN-200805-CATALOGUE-P1_") > -1){
-          var p = /C_\d{1}_/i
+          var p = /C_\d{1}_/i;
           image = image.replace("ELAMAN-200805-CATALOGUE-P1_elamancat_", "ELAMAN MAY 2008 ");
           image = image.replace(p, "");
           image = image.replace("(2)", " ");
@@ -188,7 +204,9 @@ function populate(total) {
     categories[currentCategory].items.forEach(function(item){
       var image = '';
       categories[currentCategory].images.forEach(function(img){
-        if (img[currentSubcategory]) image = img[currentSubcategory]
+        if (img[currentSubcategory]){
+          image = img[currentSubcategory];
+        }
       });
       var product = getProduct(item, image);
       var html = template(product);
@@ -209,7 +227,8 @@ expects a category like this:
 }
 */
 function getProduct(item, image){
-  if (typeof image == 'object') {
+  var key;
+  if (typeof image === 'object') {
     for(key in image) {
       if(image.hasOwnProperty(key)) {
         image = image[key];
@@ -244,7 +263,7 @@ function getProduct(item, image){
     name: name,
     description: item.name,
     pd: item.pd
-  }
+  };
 }
 
 function nav(){
@@ -254,7 +273,7 @@ function nav(){
       var cat = categories[catName];
       var items = [];
       cat.images.forEach(function(img){
-        var name = Object.keys(img)[0]
+        var name = Object.keys(img)[0];
         items.push({url: catName + '/' + name, name: name});
       });
       var html = navTemplate({items: items});
@@ -264,6 +283,9 @@ function nav(){
 
   // category switching event handler
   $('.catalog-title a, ul.products a').on('click', function(e){
+    if( $('.welcome').is(':visible')){
+      $('.welcome').hide();
+    }
     route($(this).attr('href'));
   });
 }
@@ -283,11 +305,12 @@ function removeMe(el) {
 }
 
 // load the default category on page load
+
+setDaysRemaining();
 loadProducts();
 
 var app = (function(document, $) {
 
-	'use strict';
 	var docElem = document.documentElement,
 
 		_userAgentInit = function() {
@@ -302,11 +325,12 @@ var app = (function(document, $) {
 		init: _init
 	};
 
+  
+
 })(document, jQuery);
 
 (function() {
 
-	'use strict';
 	app.init();
 
 })();
