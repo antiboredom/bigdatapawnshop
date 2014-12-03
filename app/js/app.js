@@ -26,7 +26,6 @@ var categories = {
     parser: function(item, image){
       var item = item.name;
       if(image.indexOf("_docs_") > -1){
-        
 
         //spy3_https__www.wikileaks.org_spyfiles_docs_SILTEC-PresSoci-fr.pdf_jpg123.jpg
         var pattern = /spy3_https__www\.wikileaks\.org_spyfiles_docs_/
@@ -40,20 +39,29 @@ var categories = {
         image = image.replace(pattern,' ');
         image = image.replace(pattern2,' ');
         image = image.replace(pattern3,' ');
-        image = image.replace(pattern4,' ');
-        image = image.replace('-', '');
-        image = image.toUpperCase();
-        return image.replace('.jpg', '').replace('_', ' ').replace('-', ' ').trim() + '  '+id;// + ' ' + item;
+        image = image.replace(pattern4,' ').trim();
+        image = image.replace(/_/g, ' ');
+        image = image.replace(/-/g, ' ');
+        return image.replace('.jpg', '') + '  '+id;// + ' ' + item;
 
       }
       else{
         //spy2_https__www.wikileaks.org_spyfiles_files_0_105_AMESYS-PROP_GEN_SECU_V2.pdf_jpg8.jpg"
-        var pattern = /spy\d{1}_https__www\.wikileaks\.org_spyfiles_files_0_\d{1,3}_/
+        var pattern = /spy\d{1}_https__www\.wikileaks\.org_spyfiles_files_0_\d{1,3}/
         var pattern2 = /-[a-z][a-z]/
         var pattern3 =/\.pdf_jpg\d{1,3}\.jpg/
         var pattern4 =/\d{6}/
-        var id = image.match(pattern3)[0];
-        id = id.replace(".pdf_jpg",'').replace(".jpg","").trim();
+        if(image.length <10){
+          return " ";
+        }
+
+        var id = image.match(pattern3)[0];        
+        if(id){
+          id = id.replace(".pdf_jpg",'').replace(".jpg","").trim();  
+        }
+        else{
+          id = id.replace(".pdf_jpg",'').replace(".jpg","").trim() || " ";
+        }
 
         image = image.replace(pattern,'');
 
@@ -123,21 +131,15 @@ var categories = {
             image = image.replace("EBS_Electronic-200806", "EBS ELECTRONICS JUN 2008");
 
           }
-
         }
-
         image = image.replace(pattern2,'');
         image = image.replace(pattern3,'');
-        image = image.replace("-"," ");
-        image = image.replace("_"," ");
+        image = image.replace(/_/g, ' ');
+        image = image.replace(/-/g, ' ');
         image = image.toUpperCase();
-
-        return image.trim().replace('.jpg', '').replace('_', ' ').replace('-', ' ').trim() + ' ' + id;// + ' ' + item.toUpperCase();
-
+        return image.trim().replace('.jpg', '').trim() + ' ' + id;// + ' ' + item.toUpperCase();
       }
-
     }
-
   }
 };
 
@@ -170,8 +172,6 @@ function loadProducts() {
           parsed[categories[cat.name].parser({}, filename)] = filename;
           categories[cat.name].images.push(parsed);
         }
-
-        
       });
 
       categories[cat.name].items = cat.products;
@@ -191,6 +191,10 @@ function route(path) {
   populate(48);
 }
 
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
 // populate the window with new products
 function populate(total) {
   if (currentSubcategory == null) {
@@ -204,17 +208,35 @@ function populate(total) {
     }
     $(window).bind('scroll', bindScroll);
   } else {
-    console.log(categories[currentCategory]);
-    categories[currentCategory].items.forEach(function(item){
-      var image = '';
-      categories[currentCategory].images.forEach(function(img){
-        if (img[currentSubcategory]) image = img[currentSubcategory]
-      });
-      var product = getProduct(item, image);
-      var html = template(product);
-      container.append(html);  
-      
-    });
+  
+    var itemIndices = Object.keys(categories[currentCategory].items);
+    
+    for (var i =0 ; i<total; i++){
+
+        var itemIndex = getRandomInt(0,itemIndices.length -1);
+        var image = $.grep(categories[currentCategory].images, function(e){ return Object.keys(e)[0] == currentSubcategory; });
+        if(image.length < 1){
+          console.log("no keys for : " + currentSubcategory);
+          continue;
+
+        }
+        if(image[0][currentSubcategory])image = image[0][currentSubcategory];
+        var item = categories[currentCategory].items[itemIndex];
+        var product = getProduct(item, image);
+        var html = template(product);
+        container.append(html);          
+    }
+    // categories[currentCategory].items.forEach(function(item){
+      // for (i in items){
+      //   console.log(items[i]);
+      // var image = '';
+      // categories[currentCategory].images.forEach(function(img){
+      //   if (img[currentSubcategory]) image = img[currentSubcategory]
+      // });
+      // var product = getProduct(categories[currentCategory].items[i], image);
+      // var html = template(product);
+      // container.append(html);  
+    // };
   }
 
 }
@@ -276,6 +298,7 @@ function nav(){
       var items = [];
       cat.images.forEach(function(img){
         var name = Object.keys(img)[0]
+        name = name.replace("_"," ");
         items.push({url: catName + '/' + name, name: name});
       });
       var html = navTemplate({items: items});
