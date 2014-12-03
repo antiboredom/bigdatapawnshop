@@ -136,9 +136,17 @@ nav.custom-top-bar{
 		}
 	}
 }
-
+h1#dataset-title{
+	display: none;
+	font-size:50px;
+	line-height: 50px;
+	margin-top:0;
+	font-weight: bold;
+}
 
 ul.product-grid{
+	
+
 	.button{
 		border-width:1px;
 		transition: background-color 50ms ease-out;

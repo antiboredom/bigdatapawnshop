@@ -329,7 +329,9 @@ function nav(){
   $('.catalog-title a, ul.products a').on('click', function(e){
     if( $('.welcome').is(':visible')){
       $('.welcome').hide();
+      $('#dataset-title').show();
     }
+    $('#dataset-title').html( $(this).html() );
     route($(this).attr('href'));
   });
 }
