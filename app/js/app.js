@@ -10,7 +10,7 @@ function setDaysRemaining(){
   var endday = new Date("December 31, 2014 11:59:00");
   var days = new Date( endday - today);
   var num = days.getDate();
-  $('#cyberdecember-days').html(num + " days left");
+  $('#cyberdecember-days').html(num);
 }
 
 var categories = {
