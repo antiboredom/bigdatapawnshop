@@ -165,7 +165,7 @@ var currentCategory = 'ant';
 var currentSubcategory = null;
 
 // setting up container element for products, and template
-var container = $('.product-grid');
+var container = $('#overview-products');
 var templateSource = $('#product-template').html();
 var template = Handlebars.compile(templateSource);
 

@@ -6407,6 +6407,15 @@ ul.product-grid li .description {
 ul.product-grid li .buy-btn {
   display: inline-block; }
 
+section#home {
+  background: #bbbbff; }
+
+section#about {
+  background: #bbffbb; }
+
+section#products {
+  background: #ffbbbb; }
+
 footer p {
   font-size: 10px; }
 footer ul.inline-list li {
