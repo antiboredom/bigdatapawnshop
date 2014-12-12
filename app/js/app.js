@@ -172,7 +172,7 @@ var template = Handlebars.compile(templateSource);
 var navTemplateSource = $('#nav-item-template').html();
 var navTemplate = Handlebars.compile(navTemplateSource);
 
-function loadProducts() {
+function loadProducts(staticLink) {
   $.getJSON('data/products.json', function(data){
     data.categories.forEach(function(cat){
 
@@ -194,24 +194,64 @@ function loadProducts() {
       categories[cat.name].items = cat.products;
     });
     nav();
-    route(currentCategory);
+    if(staticLink){
+      routeStatic();
+    }
+    else{
+      route(currentCategory);  
+    }
+    
   });
 }
 
+function routeStatic(){
+    container.html('');
+    $(window).unbind('scroll');
+    var path = window.location.hash;
+    console.log(path);
+    var params = path.split("/");
+    currentCategory = params[0].replace("#", "");
+    currentSubcategory = params[1];
+    var currentPd = params[2];
+
+    var image = $.grep(categories[currentCategory].images, function(e){ return Object.keys(e)[0] == currentSubcategory; });
+    var item = $.grep(categories[currentCategory].items, function(e){ return e.pd == currentPd; });
+    image = image[0][currentSubcategory];
+    item = item[0];
+    console.log(image);
+    console.log(item);
+    if(typeof item === 'undefined' || 
+      typeof image === 'undefined' ||
+      image == null || item == null){
+      route(currentCategory);
+    }
+    else{
+      populateDeepLink(item,image);  
+    }
+    
+
+}
 // changes which category we're looking at based on name (this needs to be the same as the key in the categories object)
 function route(path) {
+  
   container.html('');
   $(window).unbind('scroll');
   var params = path.split("/");
   currentCategory = params[0].replace("#", "");
   currentSubcategory = params[1] || null;
-  populate(48);
+  populate(48);    
 }
 
 function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
+function populateDeepLink(item, image){
+
+    var product = getProduct(item,image);
+    var html = template(product);
+    container.append(html);
+}
 // populate the window with new products
 function populate(total) {
   if (currentSubcategory == null) {
@@ -239,6 +279,7 @@ function populate(total) {
         }
         if(image[0][currentSubcategory])image = image[0][currentSubcategory];
         var item = categories[currentCategory].items[itemIndex];
+        console.log(item);
         var product = getProduct(item, image);
         var html = template(product);
         container.append(html);          
@@ -296,7 +337,7 @@ function getProduct(item, image){
 
   var itemImage = '238269211029758341___' + category.baseURL + image + '___' + item.pd + '.jpg';
   var bucketImgURL = category.productURL + itemImage;
-
+  console.log(item);
   var name = category.parser(item, image);
 
   return {
@@ -331,9 +372,14 @@ function nav(){
       $('.welcome').hide();
       $('#dataset-title').show();
     }
+    
+
     $('#dataset-title').html( $(this).html() );
-    route($(this).attr('href'));
+     route($(this).attr('href'),48);
   });
+
+  
+  
 }
 
 // lazy loading
@@ -353,7 +399,18 @@ function removeMe(el) {
 // load the default category on page load
 
 setDaysRemaining();
-loadProducts();
+
+if(window.location.hash) {
+    console.log(window.location.hash);
+    loadProducts(window.location.hash);
+    // hash found
+} else {
+    console.log("No hash found");
+    loadProducts();
+    // No hash found
+}
+
+
 
 var app = (function(document, $) {
 
