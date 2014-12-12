@@ -5,6 +5,11 @@
 /*jshint quotmark: false */
 // Calculate days left in sale
 
+function initApp(){
+  $('section#products').hide();
+
+}
+
 function setDaysRemaining(){
   var today = new Date();
   var endday = new Date("December 31, 2014 11:59:00");
@@ -226,6 +231,7 @@ function routeStatic(){
       route(currentCategory);
     }
     else{
+      console.log('populate deep link item');
       populateDeepLink(item,image);  
     }
     
@@ -335,13 +341,16 @@ function getProduct(item, image){
                   '&t_image1_iid=' + category.zazzleImageURL + image +
                   '&pd=' + item.pd;
 
+  var name = category.parser(item, image);
   var itemImage = '238269211029758341___' + category.baseURL + image + '___' + item.pd + '.jpg';
+  var deepLinkURL =  '/#' + name + '/' + currentCategory + '/' + item.pd; 
   var bucketImgURL = category.productURL + itemImage;
   console.log(item);
-  var name = category.parser(item, image);
+  
 
   return {
     zazzleURL: zazzleURL,
+    deepLinkURL: deepLinkURL,
     imageURL: bucketImgURL,
     price: item.price,
     name: name,
@@ -421,6 +430,7 @@ var app = (function(document, $) {
 		},
 		_init = function() {
 			$(document).foundation();
+      initApp();
 			_userAgentInit();
 		};
 

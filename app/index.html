@@ -54,7 +54,7 @@
                     <li class="divider"></li>
                     <li class="coming-soon">More Datasets</li>
                     <li class="divider"></li>
-                    <li class="coming-soon">Coming Soon</li>
+                    <li><a href="#services">SERVICES</a></li>
                   </ul>
                 </section>
               </div>
@@ -132,19 +132,19 @@
         ABOUT
         ================================================================================================================================
         -->
-        <section id="about">
+        <section id="services">
         <!-- DEVNOTE: This section includes information about the big data pawn shop including press, newsletter, and contributor -->
           <div class="row">
             
-            <div class="small-10 columns">
-                  <h1>About</h1>
+            <div class="small-8 columns">
+                  <h1>Services</h1>
                   <p>The Big Data Pawn Shop is a new kind of marketplace for data. We buy, sell, and trade data to bring you custom offerings and unique services.</p>
                   <p>Every month in 2015 we will release a new dataset. Sign up below to receive our monthly newsletter or follow <a href="http://twitter.com/bigdatapawnshop">@bigdatapawnshop</a></p>
                   <h5>Archives</h5>
                   <p>Our first dataset is the NSA ANT Catalog. Read more about the <a href="http://en.wikipedia.org/wiki/NSA_ANT_catalog">ANT dataset on Wikipedia</a>.</p>
             </div>
             
-            <div class="small-2 columns">
+            <div class="small-4 columns">
               <h4>Press</h4>
               <ul>
                 <li>The Creator's Project | <a href="http://thecreatorsproject.vice.com/blog/art-hackers-are-printing-leaked-nsa-documents-on-t-shirts-and-doggie-vests">Art Hackers Are Printing Leaked NSA Documents on T-Shirts and Doggie Vests</a></li>
@@ -233,10 +233,11 @@
     <!-- template -->
     <script id="product-template" type="text/x-handlebars-template">
       <li>
-         <a href="{{zazzleURL}}" target="_blank"><img src="{{imageURL}}" onerror="removeMe(this)"></a>
+         <a href="{{deepLinkURL}}"><img src="{{imageURL}}" onerror="removeMe(this)"></a>
          <div class="name">{{name}} {{description}}</div>
          <div class="price"><span class="price-label">Unit Cost:</span> {{price}}</div>
          <div class="description">{{description}}</div>
+         <div class="buy"><a href="{{deepLinkURL}}" class="button tiny radius">SELECT</a></div>
       </li>
     </script>
 

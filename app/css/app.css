@@ -6407,14 +6407,11 @@ ul.product-grid li .description {
 ul.product-grid li .buy-btn {
   display: inline-block; }
 
-section#home {
-  background: #bbbbff; }
-
-section#about {
-  background: #bbffbb; }
+section#services {
+  display: none; }
 
 section#products {
-  background: #ffbbbb; }
+  display: none; }
 
 footer p {
   font-size: 10px; }
